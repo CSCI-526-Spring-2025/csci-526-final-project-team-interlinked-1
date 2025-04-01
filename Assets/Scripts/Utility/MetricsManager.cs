@@ -112,6 +112,14 @@ public class MetricsManager : MonoBehaviour
             }
         }
 
+        public void RecordWaveDuration(int level, int wave, float duration)
+        {
+            if (Instance.m_canRecord)
+            {
+                m_levelMetricsData[level].m_waveDurations[wave] = duration;
+            }
+        }
+
     }
 
     private void Awake()
