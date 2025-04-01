@@ -29,6 +29,11 @@ public class PlayerBase : MonoBehaviour
     public float m_connectRadius = 10.0f;
     public int m_maxRopeConnections = 5;
     public int m_curRopeConnections = 0;
+    public bool m_canPowerThrow = true;
+    public float m_throwStrength = 10.0f;
+    public float m_throwAutoTargetRadius = 10.0f;
+    public float m_throwAutoTargetRange = 10.0f;
+    public LayerMask m_throwTargetMask;
     public GameObject m_linkObjectsParent;
     public LayerMask m_connectableLayers;
     public List<GameObject> m_linkedObjects = new List<GameObject>();
@@ -41,6 +46,7 @@ public class PlayerBase : MonoBehaviour
     [SerializeField] private float m_cameraZoomFactor = 0.025f;
     [SerializeField] private GameObject m_face;
     [SerializeField] private float m_faceMoveFactor = 0.25f;
+    public bool m_isFollowCam = true;
 
     [Header("Ability")] 
     public bool m_isDashing = false;
@@ -71,6 +77,15 @@ public class PlayerBase : MonoBehaviour
         m_orgScale = transform.localScale;
 
         m_healthComponent.m_isLinked = true;
+
+        if (m_isFollowCam)
+        {
+            m_cinemachine.m_Follow = transform;
+        }
+        else
+        {
+            m_cinemachine.m_Lens.OrthographicSize = 20.0f;
+        }
         
         SingletonMaster.Instance.EventManager.LinkEvent.AddListener(OnLinkedItem);
         SingletonMaster.Instance.EventManager.UnlinkEvent.AddListener(OnUnlinkedItem);
@@ -286,22 +301,26 @@ public class PlayerBase : MonoBehaviour
 
     private void CameraZoomControl()
     {
-        // This can have some real issue with floats
-        Vector2 minCorner = new Vector2(float.MaxValue, float.MaxValue);
-        Vector2 maxCorner = new Vector2(float.MinValue, float.MinValue);
-
-        foreach (var link in m_linkedObjects)
+        if (m_isFollowCam)
         {
-            if (link != null)
-            {
-                Vector2 pos = Camera.main.WorldToScreenPoint(link.transform.position);
+            // This can have some real issue with floats
+            Vector2 minCorner = new Vector2(float.MaxValue, float.MaxValue);
+            Vector2 maxCorner = new Vector2(float.MinValue, float.MinValue);
 
-                maxCorner = Vector2.Max(maxCorner, pos);
-                minCorner = Vector2.Min(minCorner, pos);
+            foreach (var link in m_linkedObjects)
+            {
+                if (link != null)
+                {
+                    Vector2 pos = Camera.main.WorldToScreenPoint(link.transform.position);
+
+                    maxCorner = Vector2.Max(maxCorner, pos);
+                    minCorner = Vector2.Min(minCorner, pos);
+                }
             }
+
+            m_cinemachine.m_Lens.OrthographicSize =
+                Vector2.Distance(minCorner, maxCorner) * m_cameraZoomFactor + m_orgZoom;
         }
-        
-        m_cinemachine.m_Lens.OrthographicSize = Vector2.Distance(minCorner, maxCorner) * m_cameraZoomFactor + m_orgZoom;
     }
     
     public void Move(InputAction.CallbackContext context)
@@ -313,59 +332,17 @@ public class PlayerBase : MonoBehaviour
             m_lastMoveDirection = m_moveDirection;
         }
     }
-    
-    public void Fire(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            //SingletonMaster.Instance.EventManager.StartFireEvent.Invoke();
-        }
-        else
-        {
-           //SingletonMaster.Instance.EventManager.StopFireEvent.Invoke();
-        }
-    }
 
     public void RopeConnect(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            /*
-            Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.value);
-
-            // Checking if mouse hits the unconnected hit boxes
-            {
-                RaycastHit2D[] results = new RaycastHit2D[20];
-                int num = Physics2D.CircleCastNonAlloc(mouseWorldPos, m_clickRadius, Vector2.zero,
-                    results, 0.0f, m_connectableLayers);
-
-                float minDist = float.MaxValue;
-                RaycastHit2D bestTarget = default;
-                for (int i = 0; i < num; i++)
-                {
-                    if (!m_linkedObjects.Contains(results[i].rigidbody.gameObject))
-                    {
-                        float dist = Vector3.Distance(results[i].transform.position, mouseWorldPos);
-                        if (dist < minDist)
-                        {
-                            minDist = dist;
-                            bestTarget = results[i];
-                        }
-                    }
-                }
-
-                if (num > 0 && bestTarget != default)
-                {
-                    RequestRopeConnect(bestTarget.rigidbody);
-                }
-            }
-            */
-
             if (m_bestRopeConnectTarget != null)
             {
                 // TODO: We need to change this...
                 int level = SceneManager.GetActiveScene().buildIndex;
-                MetricsManager.Instance.m_metricsData.RecordRopeOperations(level, true);
+                int wave = SingletonMaster.Instance.waveManager.m_waveCount;
+                MetricsManager.Instance.m_metricsData.RecordRopeOperations(level, wave, true);
                 RequestRopeConnect(m_bestRopeConnectTarget.GetComponent<Rigidbody2D>());
             }
         }
@@ -375,42 +352,14 @@ public class PlayerBase : MonoBehaviour
     {
         if (context.started)
         {
-            /*
-            Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.value);
-            
-            // Checking if mouse hits connected items
-            {
-                RaycastHit2D[] results = new RaycastHit2D[20];
-                int num = Physics2D.CircleCastNonAlloc(mouseWorldPos, m_clickRadius, Vector2.zero,
-                    results, 0.0f, m_connectableLayers);
-
-                float minDist = float.MaxValue;
-                RaycastHit2D bestTarget = default;
-                for (int i = 0; i < num; i++)
-                {
-                    if (m_linkedObjects.Contains(results[i].rigidbody.gameObject))
-                    {
-                        float dist = Vector3.Distance(results[i].transform.position, mouseWorldPos);
-                        if (dist < minDist)
-                        {
-                            minDist = dist;
-                            bestTarget = results[i];
-                        }
-                    }
-                }
-                
-                if (num > 0 && bestTarget != default)
-                {
-                    RemoveLinkedObject(bestTarget.rigidbody.gameObject);
-                }
-            }
-            */
-
             if (m_bestRopeDisconnectTarget != null)
             {
                 // TODO: We need to change this...
                 int level = SceneManager.GetActiveScene().buildIndex;
-                MetricsManager.Instance.m_metricsData.RecordRopeOperations(level, false);
+                int wave = SingletonMaster.Instance.waveManager.m_waveCount;
+                MetricsManager.Instance.m_metricsData.RecordRopeOperations(level, wave, false);
+                
+                // Honing in to the nearest enemy / dangerous object
                 RemoveLinkedObject(m_bestRopeDisconnectTarget);
             }
         }
@@ -442,7 +391,80 @@ public class PlayerBase : MonoBehaviour
         {
             targetRope.DetachRope(gameObject);
             targetRope.HideHighlight();
+
+            if (m_canPowerThrow)
+            {
+                StartCoroutine(AutomaticThrowToNearestTarget(obj));
+            }
+
             m_bestRopeDisconnectTarget = null;
+        }
+    }
+
+    private IEnumerator AutomaticThrowToNearestTarget(GameObject obj)
+    {
+        // TODO: Tweak This
+        Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
+        RaycastHit2D[] results = new RaycastHit2D[20];
+        Vector2 oldPos = obj.transform.position;
+
+        yield return null;
+
+        Vector2 newPos = obj.transform.position;
+        
+        Vector2 moveDir = (newPos - oldPos).normalized;
+        Debug.Log(moveDir);
+        int hits = Physics2D.CircleCastNonAlloc(rb.position, m_throwAutoTargetRadius, moveDir, results, m_throwAutoTargetRange, m_throwTargetMask);
+        
+        float minDist = float.MaxValue;
+        GameObject curBestTarget = null;
+        for (int i = 0; i < hits; i++)
+        {
+            if (results[i].collider.gameObject != obj)
+            {
+                Vector2 toTarget = results[i].transform.position - obj.transform.position;
+                float dist = Vector3.Distance(results[i].transform.position, rb.position);
+
+                if (Vector2.Dot(moveDir, toTarget) > 0.5f)
+                {
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        curBestTarget = results[i].collider.gameObject;
+                    }
+                }
+            }
+        }
+
+        if (curBestTarget != null)
+        {
+            // StartCoroutine(ThrowToTarget(rb, curBestTarget));
+            Vector2 throwDir = (curBestTarget.transform.position - obj.transform.position).normalized;
+
+            Vector3 drawDir = throwDir;
+            Debug.DrawLine(obj.transform.position, obj.transform.position + drawDir * 10.0f, Color.green, 10.0f);
+            rb.AddForce(throwDir.normalized * m_throwStrength, ForceMode2D.Impulse);
+        }
+        else
+        {
+            Debug.Log("No Target Found...");
+        }
+    }
+
+    // Even more homing missile like....
+    IEnumerator ThrowToTarget(Rigidbody2D throwObj, GameObject target)
+    {
+        float dist = Vector3.Distance(throwObj.position, target.transform.position);
+        while (dist > 2.0f)
+        {
+            Vector3 dir = (target.transform.position - throwObj.transform.position).normalized;
+            throwObj.AddForce(dir * m_throwStrength * Time.fixedDeltaTime, ForceMode2D.Impulse);
+            yield return null;
+            if (target == null || throwObj == null)
+            {
+                break;
+            }
+            dist = Vector3.Distance(throwObj.position, target.transform.position);
         }
     }
     

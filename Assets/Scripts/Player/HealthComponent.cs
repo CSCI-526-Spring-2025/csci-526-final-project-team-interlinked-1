@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class HealthComponent : MonoBehaviour
 {
@@ -14,6 +16,10 @@ public class HealthComponent : MonoBehaviour
     public UnityEvent<float, GameObject> DamageEvent = new UnityEvent<float, GameObject>();
     public UnityEvent<GameObject> DeathEvent = new UnityEvent<GameObject>();
     public bool m_isLinked = false;
+
+    [Header("Heal Settings")] 
+    public bool m_isHealing = false;
+    public GameObject m_healer = null;
 
     [Header("Visual Settings")] 
     [SerializeField] private GameObject m_playerDeath;
@@ -114,7 +120,7 @@ public class HealthComponent : MonoBehaviour
                     
                     // Do a camera shake
                     // SingletonMaster.Instance.CameraShakeManager.Shake(10.0f, 0.25f);
-                    SingletonMaster.Instance.FeelManager.m_cameraShake.PlayFeedbacks(Vector3.zero, 1.0f);
+                    SingletonMaster.Instance.FeelManager.m_cameraShake.PlayFeedbacks(transform.position, 1.0f);
                     
                     // Damage to health
                     m_health -= damage;
@@ -143,6 +149,8 @@ public class HealthComponent : MonoBehaviour
                     
                     // Damage to health
                     m_health -= damage;
+                    SingletonMaster.Instance.EventManager.EnemyDamagedEvent.Invoke(gameObject);
+                    
                     if (m_health <= 0.0f)
                     {
                         // Force kill the sequence
@@ -166,14 +174,19 @@ public class HealthComponent : MonoBehaviour
         {
             m_isInvincible = false;
             SingletonMaster.Instance.FeelManager.m_playerDeath.PlayFeedbacks(transform.position);
-            // Instantiate(m_playerDeath, transform.position, Quaternion.Euler(90.0f, 0.0f, 0.0f));
             SingletonMaster.Instance.EventManager.PlayerDeathEvent.Invoke(killer);
+            
+            // Metrics
+            int level = SceneManager.GetActiveScene().buildIndex;
+            
+            Vector2 deathPos = transform.position;
+            MetricsManager.Instance.m_metricsData.RecordDeath(level, deathPos);
+            
             Destroy(gameObject);
         }
         else if (gameObject.CompareTag("Enemy"))
         {
             SingletonMaster.Instance.FeelManager.m_enemyDeath.PlayFeedbacks(transform.position);
-            // Instantiate(m_enemyDeath, transform.position, Quaternion.Euler(90.0f, 0.0f, 0.0f));
             SingletonMaster.Instance.EventManager.EnemyDeathEvent.Invoke(gameObject);
         }
         else

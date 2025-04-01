@@ -64,6 +64,9 @@ public class ShootComponent : MonoBehaviour
     {
         m_RB = GetComponent<Rigidbody2D>();
         
+        // Start spawn as trigger
+        GetComponent<Collider2D>().isTrigger = true;
+        
         SingletonMaster.Instance.EventManager.StartFireEvent.AddListener(StartFiring);
         SingletonMaster.Instance.EventManager.StopFireEvent.AddListener(StopFiring);
         SingletonMaster.Instance.EventManager.PlayerDeathEvent.AddListener(OnPlayerDeath);
@@ -319,11 +322,14 @@ public class ShootComponent : MonoBehaviour
         for (int i = 0; i < size; i++)
         {
             RaycastHit2D enemy = results[i];
-            float dist = Vector2.Distance(enemy.transform.position, transform.position);
-            if (dist < minDist)
+            if (!enemy.collider.isTrigger)
             {
-                minDist = dist;
-                bestTarget = enemy.collider.gameObject;
+                float dist = Vector2.Distance(enemy.transform.position, transform.position);
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    bestTarget = enemy.collider.gameObject;
+                }
             }
         }
             
@@ -388,7 +394,14 @@ public class ShootComponent : MonoBehaviour
                 }
             }
         }
-        
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Background") && GetComponent<Collider2D>().isTrigger)
+        {
+            GetComponent<Collider2D>().isTrigger = false;
+        }
     }
     
     

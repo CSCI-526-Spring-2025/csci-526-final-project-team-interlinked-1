@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
+// TODO: Refactor this into a loot class
 public class AbilityComponent : MonoBehaviour
 {
     [Header("Ability Settings")]
     public AbilityScriptable m_ability;
     public int m_maxUse = 5;
+    public bool m_canDespawn = true;
     [SerializeField] private SpriteRenderer m_spriteRenderer;
     [SerializeField] private AbilityManager.AbilityTypes m_type;
     [SerializeField] private Color m_coolDownColor;
@@ -23,13 +25,16 @@ public class AbilityComponent : MonoBehaviour
     
     [Header("Visual Settings")]
     [SerializeField] private float m_shrinkTime = 0.15f;
+    [SerializeField] private List<Color> m_collectedColor = new List<Color>();
+    [SerializeField] private List<SpriteRenderer> m_spriteRenderers = new List<SpriteRenderer>();
 
+    private List<Color> m_uncollectedColor = new List<Color>();
     private bool m_isDespawning = false;
     private bool m_isConnected = false;
     private bool m_canActivate = true;
-    private Color m_orgColor;
     private int m_use = 0;
     private float m_despawnTimer = 0.0f;
+    private Vector3 m_orgScale;
     
     private void Start()
     {
@@ -39,11 +44,19 @@ public class AbilityComponent : MonoBehaviour
         SingletonMaster.Instance.AbilityManager.ActivateAbility.AddListener(OnAbilityActivated);
         SingletonMaster.Instance.AbilityManager.AbilityFinished.AddListener(OnAbilityFinished);
 
-        m_orgColor = m_spriteRenderer.color;
+        m_orgScale = transform.localScale;
+        
+        // Start spawn as trigger
+        GetComponent<Collider2D>().isTrigger = true;
 
         if (!m_showText)
         {
             m_text.SetActive(false);
+        }
+        
+        foreach (var sp in m_spriteRenderers)
+        {
+            m_uncollectedColor.Add(sp.color);
         }
     }
 
@@ -66,11 +79,20 @@ public class AbilityComponent : MonoBehaviour
     {
         if (m_isConnected && m_type == type && m_canActivate && m_use < m_maxUse)
         {
+            float ratio = (m_maxUse - m_use) / (float)m_maxUse;
+            transform.localScale = m_orgScale * ratio;
+            
             m_canActivate = false;
+            Color orgColor = m_spriteRenderer.color;
             Color newColor = m_coolDownColor;
             newColor.a = 0.5f;
             m_spriteRenderer.color = newColor;
-            StartCoroutine(StartColorFade());
+
+            m_spriteRenderer.DOFade(1.0f, m_ability.m_coolDown).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                m_spriteRenderer.color = orgColor;
+                m_canActivate = true;
+            });
         }
     }
 
@@ -86,6 +108,11 @@ public class AbilityComponent : MonoBehaviour
         {
             m_isConnected = false;
             m_ability.RemoveLink();
+            
+            for (int i = 0; i < m_spriteRenderers.Count; i++)
+            {
+                m_spriteRenderers[i].color = m_uncollectedColor[i];
+            }
 
             if (m_showText)
             {
@@ -101,40 +128,18 @@ public class AbilityComponent : MonoBehaviour
             m_isConnected = true;
             m_ability.AddLink();
             
+            for (int i = 0; i < m_spriteRenderers.Count; i++)
+            {
+                m_spriteRenderers[i].color = m_collectedColor[i];
+            }
+
+            m_despawnTimer = 0.0f;
+            
             if (m_showText)
             {
                 m_text.SetActive(false);
             }
         }
-    }
-
-    private IEnumerator StartColorFade()
-    {
-        float time = 0.0f;
-        float rate = (1.0f - 0.5f) / m_ability.m_coolDown;
-        
-        while (time <= m_ability.m_coolDown)
-        {
-            time += Time.deltaTime;
-            Color newColor = m_spriteRenderer.color;
-
-            if (newColor.a < 1.0f)
-            {
-                newColor.a += rate * Time.deltaTime;
-            }
-            else
-            {
-                newColor.a = 1.0f;
-            }
-            
-            // Debug.Log(newColor.a);
-            
-            m_spriteRenderer.color = newColor;
-            yield return null;
-        }
-
-        m_spriteRenderer.color = m_orgColor;
-        m_canActivate = true;
     }
     
     private void OnCollisionEnter2D(Collision2D other)
@@ -156,14 +161,21 @@ public class AbilityComponent : MonoBehaviour
     {
         if (!m_isDespawning && SingletonMaster.Instance.PlayerBase != null)
         {
-            if (!m_isConnected)
+            if (m_canDespawn)
             {
-                m_despawnTimer += Time.deltaTime;
-                if (m_despawnTimer >= m_lifeTime)
+                if (!m_isConnected)
                 {
-                    m_isDespawning = true;
-                    ShrinkSequence();
+                    m_despawnTimer += Time.deltaTime;
+                    if (m_despawnTimer >= m_lifeTime)
+                    {
+                        m_isDespawning = true;
+                        ShrinkSequence();
+                    }
                 }
+            }
+            else
+            {
+                m_despawnTimer = 0.0f;
             }
         }
     }
@@ -176,5 +188,13 @@ public class AbilityComponent : MonoBehaviour
         {
             Destroy(gameObject);
         });
+    }
+    
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Background") && GetComponent<Collider2D>().isTrigger)
+        {
+            GetComponent<Collider2D>().isTrigger = false;
+        }
     }
 }

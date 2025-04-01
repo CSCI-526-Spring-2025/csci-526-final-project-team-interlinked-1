@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_levelNames:
   - Prototype - Tutorial
+  - Small Level
   - Prototype - Battlefield
+  - Prototype - Battlefield
+  m_waveCount: 01000000040000000500000005000000
