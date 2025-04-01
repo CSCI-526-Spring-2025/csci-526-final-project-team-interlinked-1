@@ -40,6 +40,7 @@ public class MetricsManager : MonoBehaviour
         // For obtaining the number of rope connections & disconnections each level
         public List<int> m_ropeConnectionMetrics = new List<int>();
         public List<int> m_ropeDisconnectionMetrics = new List<int>();
+        public List<string> m_weaponAtDeath = new List<string>();
         
         // For death heat map
         public List<SerializableVector2> m_deathLocations = new List<SerializableVector2>();
