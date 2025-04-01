@@ -69,6 +69,13 @@ public class MetricsManager : MonoBehaviour
                 }
                 
                 m_levelMetricsData.Add(level);
+
+                for (int j = 0; j < Instance.m_levelData.m_waveCount[i]; j++)
+                {
+                    level.m_ropeConnectionMetrics.Add(0);
+                    level.m_ropeDisconnectionMetrics.Add(0);
+                    level.m_waveDurations.Add(0f);
+                }
             }
         }
         
