@@ -117,6 +117,7 @@ public class MetricsManager : MonoBehaviour
             if (Instance.m_canRecord)
             {
                 m_levelMetricsData[level].m_waveDurations[wave] = duration;
+                Debug.Log($"Wave Duration - Level: {level}, Wave: {wave}, Time: {duration}s");
             }
         }
 
