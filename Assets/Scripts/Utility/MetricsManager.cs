@@ -104,6 +104,15 @@ public class MetricsManager : MonoBehaviour
                 Debug.Log("Death Position: " + position);
             }
         }
+
+        public void RecordWeaponAtDeath(int level, string weaponName)
+        {
+            if (Instance.m_canRecord)
+            {
+                m_levelMetricsData[level].m_weaponAtDeath.Add(weaponName);
+                Debug.Log($"Weapon at Death: Level {level} and Weapon {weaponName}");
+            }
+        }
     }
 
     private void Awake()
