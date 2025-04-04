@@ -46,6 +46,10 @@ public class MetricsManager : MonoBehaviour
         // For death heat map
         public int m_deathCount = 0;
         public List<SerializableVector2> m_deathLocations = new List<SerializableVector2>();
+
+        public int m_weaponStealAttempts = 0;
+        public int m_weaponStealSuccesses = 0;
+
     }
     
     [Serializable]
@@ -77,7 +81,7 @@ public class MetricsManager : MonoBehaviour
                 }
                 
                 m_levelMetricsData.Add(level);
-                
+
             }
         }
         
