@@ -47,6 +47,7 @@ public class MetricsManager : MonoBehaviour
         public int m_deathCount = 0;
         public List<SerializableVector2> m_deathLocations = new List<SerializableVector2>();
 
+        // For weapon steal rate across all levels
         public int m_weaponStealAttempts = 0;
         public int m_weaponStealSuccesses = 0;
 
