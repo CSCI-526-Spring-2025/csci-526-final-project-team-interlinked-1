@@ -42,7 +42,6 @@ public class MetricsManager : MonoBehaviour
         // For obtaining the number of rope connections & disconnections each level upon completion
         public List<int> m_ropeConnectionMetrics = new List<int>();
         public List<int> m_ropeDisconnectionMetrics = new List<int>();
-        public List<float> m_waveDurations = new List<float>();
         
         // For death heat map
         public int m_deathCount = 0;
@@ -78,13 +77,7 @@ public class MetricsManager : MonoBehaviour
                 }
                 
                 m_levelMetricsData.Add(level);
-
-                for (int j = 0; j < Instance.m_levelData.m_waveCount[i]; j++)
-                {
-                    level.m_ropeConnectionMetrics.Add(0);
-                    level.m_ropeDisconnectionMetrics.Add(0);
-                    level.m_waveDurations.Add(0f);
-                }
+                
             }
         }
         
@@ -118,15 +111,6 @@ public class MetricsManager : MonoBehaviour
                 m_levelMetricsData[level].m_deathCount += 1;
 
                 Debug.Log("Death Position: " + position);
-            }
-        }
-
-        public void RecordWaveDuration(int level, int wave, float duration)
-        {
-            if (Instance.m_canRecord)
-            {
-                m_levelMetricsData[level].m_waveDurations[wave] = duration;
-                Debug.Log($"Wave Duration - Level: {level}, Wave: {wave}, Time: {duration}s");
             }
         }
 
