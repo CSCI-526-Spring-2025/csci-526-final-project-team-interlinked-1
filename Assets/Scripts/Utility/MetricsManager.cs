@@ -119,6 +119,21 @@ public class MetricsManager : MonoBehaviour
             }
         }
 
+        public void RecordWeaponStealAttempt(int level, bool successful)
+        {
+            if (Instance.m_canRecord)
+            {
+                m_levelMetricsData[level].m_weaponStealAttempts += 1;
+
+                if (successful)
+                {
+                    m_levelMetricsData[level].m_weaponStealSuccesses += 1;
+                }
+
+                Debug.Log($"[Level {level}] Steal Attempt Success: {successful}");
+            }
+        }
+
     }
 
     private void Awake()
