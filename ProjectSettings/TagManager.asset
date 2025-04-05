@@ -13,6 +13,7 @@ TagManager:
   - EnemyProjectile
   - Shop
   - Loot
+  - Border
   layers:
   - Default
   - TransparentFX
@@ -26,8 +27,8 @@ TagManager:
   - Enemy
   - Bullet
   - Dangerous
-  - 
-  - 
+  - Arena
+  - Walls
   - 
   - 
   - 

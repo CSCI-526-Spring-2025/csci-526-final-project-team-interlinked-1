@@ -33,8 +33,9 @@ public class UI : MonoBehaviour
         SingletonMaster.Instance.EventManager.PlayerDeathEvent.AddListener(OnPlayerDeath);
         SingletonMaster.Instance.EventManager.CooldownStarted.AddListener(ShowCooldown);
         SingletonMaster.Instance.EventManager.NextWaveEvent.AddListener(OnUpdateWave);
-        SingletonMaster.Instance.EventManager.WinEvent.AddListener(OnPlayerWin);
-        SingletonMaster.Instance.EventManager.NeedClearEvent.AddListener(OnNeedClear);
+        SingletonMaster.Instance.EventManager.LevelClearEvent.AddListener(OnLevelClear);
+        SingletonMaster.Instance.EventManager.NeedWaveClearEvent.AddListener(OnNeedClear);
+        SingletonMaster.Instance.EventManager.PlayerWinEvent.AddListener(OnWin);
 
         if (SingletonMaster.Instance.PlayerBase != null)
         {
@@ -43,8 +44,6 @@ public class UI : MonoBehaviour
 
             m_maxConnections = SingletonMaster.Instance.PlayerBase.m_maxRopeConnections;
         }
-
-        Debug.Log("[UI] Waiting for first wave...");
     }
 
     private void OnNeedClear()
@@ -55,12 +54,16 @@ public class UI : MonoBehaviour
             m_announcementText.enabled = true;
             m_announcementText.text = "Kill all leftover enemies";
         }
-        // EnqueueAnnouncement("Kill all leftover enemies", true, 3.0f);
     }
 
     private void OnUpdateWave(EnemySpawnScriptable wave)
     {
-        Debug.Log($"[UI] New wave started! Wave Time: {wave.m_waveTime}");
+        if (!m_waveText.enabled)
+        {
+            m_waveText.enabled = true;
+        }
+        
+        Debug.Log($"New wave started! Wave Time: {wave.m_waveTime}");
         m_waveTime = wave.m_waveTime; // Set wave duration dynamically from EnemyManager
         m_waveCount++;
         // shrinkingTriggered = false; // Reset shrinking flag for the new wave
@@ -72,8 +75,9 @@ public class UI : MonoBehaviour
         SingletonMaster.Instance.EventManager.PlayerDeathEvent.RemoveListener(OnPlayerDeath);
         SingletonMaster.Instance.EventManager.CooldownStarted.RemoveListener(ShowCooldown);
         SingletonMaster.Instance.EventManager.NextWaveEvent.RemoveListener(OnUpdateWave);
-        SingletonMaster.Instance.EventManager.WinEvent.RemoveListener(OnPlayerWin);
-        SingletonMaster.Instance.EventManager.NeedClearEvent.RemoveListener(OnNeedClear);
+        SingletonMaster.Instance.EventManager.LevelClearEvent.RemoveListener(OnLevelClear);
+        SingletonMaster.Instance.EventManager.NeedWaveClearEvent.RemoveListener(OnNeedClear);
+        SingletonMaster.Instance.EventManager.PlayerWinEvent.RemoveListener(OnWin);
     }
 
     private void Update()
@@ -87,60 +91,14 @@ public class UI : MonoBehaviour
             }
             
             m_waveText.text = $"Wave Time: {m_waveTime:F2}  Wave Count: {m_waveCount}";
-            m_ropeCountText.text = "Rope: " + (SingletonMaster.Instance.PlayerBase.m_linkedObjects.Count - 1) + "/" +
+            m_ropeCountText.text = "ROPE: " + (SingletonMaster.Instance.PlayerBase.m_linkedObjects.Count - 1) + "/" +
                                    m_maxConnections;
         }
         else
         {
             m_waveText.text = $"Wave Time: You Died...  Wave Count: {m_waveCount}";
-            m_ropeCountText.text = "Rope: DEAD/" + m_maxConnections;
+            m_ropeCountText.text = "ROPE: DEAD/" + m_maxConnections;
         }
-
-        // if (waveActive && m_waveTime == 0.0f && !shrinkingTriggered)
-        // {
-        //     shrinkingTriggered = true;
-        //     waveActive = false; // Prevents this from re-triggering
-        //     StartCoroutine(StartWallShrinkingSequence());
-        // }
-    }
-
-    private IEnumerator StartWallShrinkingSequence()
-    {
-        Debug.Log("[UI] Wave timer reached 0, preparing to shrink walls...");
-
-        EnqueueAnnouncement("Warning! Walls will start closing in!", false, 3.0f);
-        yield return new WaitForSeconds(3.0f); // Delay before shrinking starts
-
-        EnqueueAnnouncement("The walls are shrinking!", false, 2.0f);
-        Debug.Log("[UI] Triggering Wall Shrinking Event...");
-        SingletonMaster.Instance.EventManager.WaveTimeoutEvent.Invoke(); // Notify walls to shrink
-    }
-
-    public void EnqueueAnnouncement(string message, bool overwrite, float duration = 2.0f)
-    {
-        m_announcementQueue.Enqueue(message);
-        if (!m_announcementActive)
-        {
-            m_announcement = StartCoroutine(DisplayAnnouncement(duration));
-        }
-        else if (overwrite)
-        {
-            StopCoroutine(m_announcement);
-            m_announcement = StartCoroutine(DisplayAnnouncement(duration));
-        }
-    }
-
-    private IEnumerator DisplayAnnouncement(float duration)
-    {
-        while (m_announcementQueue.Count > 0)
-        {
-            m_announcementActive = true;
-            m_announcementText.enabled = true;
-            m_announcementText.text = m_announcementQueue.Dequeue();
-            yield return new WaitForSeconds(duration);
-        }
-        m_announcementText.enabled = false;
-        m_announcementActive = false;
     }
 
 
@@ -195,11 +153,34 @@ public class UI : MonoBehaviour
         m_announcementText.text = "Press R to Restart";
     }
 
-    private void OnPlayerWin()
+    private void OnLevelClear()
     {
         m_finalMessageText.enabled = true; 
         m_finalMessageText.text = "SURVIVED";
         m_announcementText.enabled = true;
         m_announcementText.text = "Press Space to Continue";
+    }
+    
+    private void OnWin()
+    {
+        m_finalMessageText.enabled = true; 
+        m_finalMessageText.text = "YOU WIN";
+        m_announcementText.enabled = true;
+        m_announcementText.text = "End of Demo (for now...)";
+    }
+
+    public void ShowBigText(string words, float duration)
+    {
+        StartCoroutine(ShowBigTextCoroutine(words, duration));
+    }
+
+    private IEnumerator ShowBigTextCoroutine(string words, float duration)
+    {
+        m_finalMessageText.enabled = true;
+        m_finalMessageText.text = words;
+
+        yield return new WaitForSeconds(duration);
+        
+        m_finalMessageText.enabled = false;
     }
 }

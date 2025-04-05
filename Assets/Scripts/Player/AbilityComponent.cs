@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
+// TODO: Refactor this into a loot class
 public class AbilityComponent : MonoBehaviour
 {
     [Header("Ability Settings")]
     public AbilityScriptable m_ability;
     public int m_maxUse = 5;
+    public bool m_canDespawn = true;
     [SerializeField] private SpriteRenderer m_spriteRenderer;
     [SerializeField] private AbilityManager.AbilityTypes m_type;
     [SerializeField] private Color m_coolDownColor;
     [SerializeField] private RopeComponent m_ropeComponent;
-    [SerializeField] private GameObject m_text;
-    [SerializeField] private bool m_showText = false;
     [SerializeField] private float m_lifeTime = 10.0f;
     
     [Header("Damage Settings")]
@@ -23,14 +23,23 @@ public class AbilityComponent : MonoBehaviour
     
     [Header("Visual Settings")]
     [SerializeField] private float m_shrinkTime = 0.15f;
+    [SerializeField] private AnimationCurve m_curve;
+    [SerializeField] private float m_scaleFactor = 1.25f;
+    [SerializeField] private List<Color> m_collectedColor = new List<Color>();
+    [SerializeField] private List<SpriteRenderer> m_spriteRenderers = new List<SpriteRenderer>();
+    [SerializeField] private GameObject m_connectPrompt;
+    [SerializeField] private GameObject m_disconnectPrompt;
+    [SerializeField] private bool m_showPrompt = false;
 
+    private List<Color> m_uncollectedColor = new List<Color>();
     private bool m_isDespawning = false;
     private bool m_isConnected = false;
-    private bool m_canActivate = true;
-    private Color m_orgColor;
-    private int m_use = 0;
+    [SerializeField] private bool m_canActivate = true;
+    [SerializeField] private int m_use = 0;
     private float m_despawnTimer = 0.0f;
-    
+    private Vector3 m_orgScale;
+
+    private bool m_isFirstTime = true;
     private void Start()
     {
         SingletonMaster.Instance.EventManager.LinkEvent.AddListener(OnLinked);
@@ -39,21 +48,42 @@ public class AbilityComponent : MonoBehaviour
         SingletonMaster.Instance.AbilityManager.ActivateAbility.AddListener(OnAbilityActivated);
         SingletonMaster.Instance.AbilityManager.AbilityFinished.AddListener(OnAbilityFinished);
 
-        m_orgColor = m_spriteRenderer.color;
+        float scale = m_curve.Evaluate((float)(m_maxUse - m_use) / m_maxUse) * m_scaleFactor;
+        transform.localScale = Vector3.one * scale;
+        m_orgScale = transform.localScale;
+        
+        // Start spawn as trigger
+        GetComponent<Collider2D>().isTrigger = true;
 
-        if (!m_showText)
+        if (!m_showPrompt)
         {
-            m_text.SetActive(false);
+            m_connectPrompt.SetActive(false);
+            m_disconnectPrompt.SetActive(false);
         }
+        
+        foreach (var sp in m_spriteRenderers)
+        {
+            m_uncollectedColor.Add(sp.color);
+        }
+        
+        // Record spawn
+        MetricsManager.Instance.m_metricsData.RecordAblitySpawn(m_ability.m_name);
+    }
+    
+    private void OnDisable()
+    {
+        SingletonMaster.Instance.EventManager.LinkEvent.RemoveListener(OnLinked);
+        SingletonMaster.Instance.EventManager.UnlinkEvent.RemoveListener(OnUnlinked);
+        
+        SingletonMaster.Instance.AbilityManager.ActivateAbility.RemoveListener(OnAbilityActivated);
+        SingletonMaster.Instance.AbilityManager.AbilityFinished.RemoveListener(OnAbilityFinished);
     }
 
     private void OnAbilityFinished(AbilityManager.AbilityTypes type)
     {
         if (m_isConnected && m_type == type)
         {
-            m_use++;
-            
-            if (m_use == m_maxUse)
+            if (m_use >= m_maxUse)
             {
                 m_ropeComponent.DetachRope(SingletonMaster.Instance.PlayerBase.gameObject);
                 m_isDespawning = true;
@@ -66,18 +96,53 @@ public class AbilityComponent : MonoBehaviour
     {
         if (m_isConnected && m_type == type && m_canActivate && m_use < m_maxUse)
         {
+            m_use++;
+            float scale = m_curve.Evaluate((float)(m_maxUse - m_use) / m_maxUse) * m_scaleFactor;
+            transform.localScale = Vector3.one * scale;
+            
+            Debug.Log("Ability " + type + " use: " + m_use);
+            
             m_canActivate = false;
-            Color newColor = m_coolDownColor;
-            newColor.a = 0.5f;
-            m_spriteRenderer.color = newColor;
-            StartCoroutine(StartColorFade());
-        }
-    }
 
-    private void OnDisable()
-    {
-        SingletonMaster.Instance.EventManager.LinkEvent.RemoveListener(OnLinked);
-        SingletonMaster.Instance.EventManager.UnlinkEvent.RemoveListener(OnUnlinked);
+            for (int i = 0; i < m_spriteRenderers.Count; i++)
+            {
+                Color newColor = m_coolDownColor;
+                newColor.a = 0.5f;
+                m_spriteRenderers[i].color = newColor;
+                m_spriteRenderers[i].DOFade(1.0f, m_ability.m_coolDown).SetEase(Ease.Linear).OnComplete(() =>
+                {
+                    if (m_isConnected)
+                    {
+                        for (int i = 0; i < m_spriteRenderers.Count; i++)
+                        {
+                            m_spriteRenderers[i].color = m_collectedColor[i];
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < m_spriteRenderers.Count; i++)
+                        {
+                            m_spriteRenderers[i].color = m_uncollectedColor[i];
+                        }
+                    }
+
+                    m_canActivate = true;
+                });
+            }
+
+            // For tutorial
+            if (GameManager.Instance.m_levelData.m_needsTutorial)
+            {
+                SingletonMaster.Instance.EventManager.TutorialPlayerAbility.Invoke();
+            }
+
+            if (m_isFirstTime)
+            {
+                m_isFirstTime = false;
+                // Record Activation
+                MetricsManager.Instance.m_metricsData.RecordAblityActivate(m_ability.m_name);
+            }
+        }
     }
     
     private void OnUnlinked(GameObject obj, GameObject instigator)
@@ -87,9 +152,12 @@ public class AbilityComponent : MonoBehaviour
             m_isConnected = false;
             m_ability.RemoveLink();
 
-            if (m_showText)
+            if (m_canActivate)
             {
-                m_text.SetActive(true);
+                for (int i = 0; i < m_spriteRenderers.Count; i++)
+                {
+                    m_spriteRenderers[i].color = m_uncollectedColor[i];
+                }
             }
         }
     }
@@ -100,41 +168,24 @@ public class AbilityComponent : MonoBehaviour
         {
             m_isConnected = true;
             m_ability.AddLink();
-            
-            if (m_showText)
+
+            if (m_canActivate)
             {
-                m_text.SetActive(false);
+                for (int i = 0; i < m_spriteRenderers.Count; i++)
+                {
+                    m_spriteRenderers[i].color = m_collectedColor[i];
+                }
+            }
+
+            m_despawnTimer = 0.0f;
+            
+            if (m_showPrompt)
+            {
+                m_connectPrompt.SetActive(false);
+                m_showPrompt = false;
+                SingletonMaster.Instance.EventManager.TutorialPlayerLinkedAbility.Invoke();
             }
         }
-    }
-
-    private IEnumerator StartColorFade()
-    {
-        float time = 0.0f;
-        float rate = (1.0f - 0.5f) / m_ability.m_coolDown;
-        
-        while (time <= m_ability.m_coolDown)
-        {
-            time += Time.deltaTime;
-            Color newColor = m_spriteRenderer.color;
-
-            if (newColor.a < 1.0f)
-            {
-                newColor.a += rate * Time.deltaTime;
-            }
-            else
-            {
-                newColor.a = 1.0f;
-            }
-            
-            // Debug.Log(newColor.a);
-            
-            m_spriteRenderer.color = newColor;
-            yield return null;
-        }
-
-        m_spriteRenderer.color = m_orgColor;
-        m_canActivate = true;
     }
     
     private void OnCollisionEnter2D(Collision2D other)
@@ -156,14 +207,21 @@ public class AbilityComponent : MonoBehaviour
     {
         if (!m_isDespawning && SingletonMaster.Instance.PlayerBase != null)
         {
-            if (!m_isConnected)
+            if (m_canDespawn)
             {
-                m_despawnTimer += Time.deltaTime;
-                if (m_despawnTimer >= m_lifeTime)
+                if (!m_isConnected)
                 {
-                    m_isDespawning = true;
-                    ShrinkSequence();
+                    m_despawnTimer += Time.deltaTime;
+                    if (m_despawnTimer >= m_lifeTime)
+                    {
+                        m_isDespawning = true;
+                        ShrinkSequence();
+                    }
                 }
+            }
+            else
+            {
+                m_despawnTimer = 0.0f;
             }
         }
     }
@@ -176,5 +234,13 @@ public class AbilityComponent : MonoBehaviour
         {
             Destroy(gameObject);
         });
+    }
+    
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Background") && GetComponent<Collider2D>().isTrigger)
+        {
+            GetComponent<Collider2D>().isTrigger = false;
+        }
     }
 }

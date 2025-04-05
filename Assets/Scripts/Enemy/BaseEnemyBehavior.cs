@@ -31,57 +31,50 @@ public class BaseEnemyBehavior : MonoBehaviour
     
     // private Sequence m_damageTween = null;
     private Coroutine m_damageSequence = null;
-    
-    /// <summary>
-    /// Overwrite this for custom start behavior
-    /// </summary>
-    protected virtual void OnStart() { }
-    
-    /// <summary>
-    /// Overwrite this for custom update behavior
-    /// </summary>
-    protected virtual void OnUpdate() { }
-    
-    protected virtual void OnBeingDisabled() { }
 
-    private void Start()
+    protected virtual void Start()
     {
         m_orgColor = m_spriteRenderer.color;
         m_orgScale = transform.localScale;
+
+        // Start spawn as trigger
+        GetComponent<Collider2D>().isTrigger = true;
         
         SingletonMaster.Instance.EventManager.LinkEvent.AddListener(OnLinked);
         SingletonMaster.Instance.EventManager.UnlinkEvent.AddListener(OnUnlinked);
-        
-        OnStart();
     }
     
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         SingletonMaster.Instance.EventManager.LinkEvent.RemoveListener(OnLinked);
         SingletonMaster.Instance.EventManager.UnlinkEvent.RemoveListener(OnUnlinked);
-        
-        OnBeingDisabled();
     }
 
     private void OnUnlinked(GameObject obj, GameObject instigator)
     {
-        if (obj == gameObject && instigator.CompareTag("Player"))
+        if (instigator != null)
         {
-            m_canBeTossed = false;
+            if (obj == gameObject && instigator.CompareTag("Player"))
+            {
+                m_canBeTossed = false;
+            }
         }
     }
 
     private void OnLinked(GameObject obj, GameObject instigator)
     {
-        if (obj == gameObject && instigator.CompareTag("Player"))
+        if (instigator != null)
         {
-            m_canBeTossed = true;
+            if (obj == gameObject && instigator.CompareTag("Player"))
+            {
+                m_canBeTossed = true;
+            }
         }
     }
     
-    private void Update()
+    protected virtual void Update()
     {
-        OnUpdate();
+        
     }
 
     protected virtual void OnDamaged(float amount)
@@ -100,7 +93,7 @@ public class BaseEnemyBehavior : MonoBehaviour
             {
                 // Remap relative velocity magnitude to health
                 relativeVel = Mathf.Clamp(relativeVel, 0.0f, m_collisionVelocityThreshold * 1.5f);
-                relativeVel = relativeVel.Remap(m_collisionVelocityThreshold, m_collisionVelocityThreshold * 1.5f, 0.0f, m_healthComponent.m_maxHealth * 0.25f);
+                relativeVel = relativeVel.Remap(m_collisionVelocityThreshold, m_collisionVelocityThreshold * 1.5f, 0.0f, m_healthComponent.m_maxHealth * 0.35f);
                 
                 Debug.Log("Damage: " + relativeVel);
                 m_healthComponent.DamageEvent.Invoke(relativeVel, gameObject);
@@ -115,7 +108,18 @@ public class BaseEnemyBehavior : MonoBehaviour
                 }
             }
         }
-        
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Background") && GetComponent<Collider2D>().isTrigger)
+        {
+            GetComponent<Collider2D>().isTrigger = false;
+            if (SingletonMaster.Instance.FeelManager.m_wallParticles != null)
+            {
+                SingletonMaster.Instance.FeelManager.m_wallParticles.PlayFeedbacks(transform.position);
+            }
+        }
     }
 
     private void OnCollisionStay2D(Collision2D other)
@@ -127,6 +131,10 @@ public class BaseEnemyBehavior : MonoBehaviour
             {
                 health.DamageEvent.Invoke(m_damage, gameObject);
             }
+        }
+        else if (other.collider.CompareTag("Border"))
+        {
+            m_healthComponent.DamageEvent.Invoke(0.1f, gameObject);
         }
     }
 }
