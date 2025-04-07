@@ -46,11 +46,16 @@ public class TutorialSequence : MonoBehaviour
             SingletonMaster.Instance.EventManager.TutorialPlayerLinkedAbility.AddListener(OnPlayerLinkedAbility);
             SingletonMaster.Instance.EventManager.TutorialPlayerAbility.AddListener(OnPlayerAbility);
             m_controlPrompts[0].SetActive(true);
+            
+            m_upWall.SetActive(true);
+            m_downWall.SetActive(true);
+            m_leftWall.SetActive(true);
+            m_rightWall.SetActive(true);
         }
         else
         {
             m_currentStep = TutorialProgress.Done;
-            TransitionIntoGameplay();
+            StartGameplayImmediately();
         }
     }
 
@@ -192,6 +197,17 @@ public class TutorialSequence : MonoBehaviour
             
             gameObject.SetActive(false);
         });
+    }
 
+    private void StartGameplayImmediately()
+    {
+        m_upWall.SetActive(false);
+        m_downWall.SetActive(false);
+        m_leftWall.SetActive(false);
+        m_rightWall.SetActive(false);
+            
+        SingletonMaster.Instance.WaveManager.StartWaves();
+            
+        gameObject.SetActive(false);
     }
 }

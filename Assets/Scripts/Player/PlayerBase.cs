@@ -39,7 +39,6 @@ public class PlayerBase : MonoBehaviour
     public List<GameObject> m_linkedObjects = new List<GameObject>();
     private List<Vector3> m_linkedDisplacements = new List<Vector3>();
     private List<Vector3> m_ropeDisplacements = new List<Vector3>();
-    
 
     [Header("Visual Settings")] 
     [SerializeField] private CinemachineVirtualCamera m_cinemachine;
@@ -96,9 +95,13 @@ public class PlayerBase : MonoBehaviour
 
     private void OnUnlinkedItem(GameObject obj, GameObject instigator)
     {
-        if (m_linkedObjects.Contains(obj) && instigator.CompareTag("Player"))
+        // TODO: There are some exceptions here
+        if (obj != null && instigator != null)
         {
-            m_linkedObjects.Remove(obj);
+            if (m_linkedObjects.Contains(obj) && instigator.CompareTag("Player"))
+            {
+                m_linkedObjects.Remove(obj);
+            }
         }
     }
 
@@ -469,8 +472,9 @@ public class PlayerBase : MonoBehaviour
     {
         if (context.started)
         {
-            Debug.Log("Dash");
+            Debug.Log("Trying to Activate Abilities");
             SingletonMaster.Instance.AbilityManager.ActivateAbility.Invoke(AbilityManager.AbilityTypes.Dash);
+            SingletonMaster.Instance.AbilityManager.ActivateAbility.Invoke(AbilityManager.AbilityTypes.Knockback);
         }
     }
     

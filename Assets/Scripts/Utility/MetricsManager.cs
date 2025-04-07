@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Proyecto26;
 using ScriptableObjects;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -22,6 +23,12 @@ public class MetricsManager : MonoBehaviour
 
     [Header("Level Data")] 
     public LevelDataScriptable m_levelData;
+
+    [Header("Weapon Settings")] 
+    public WeaponListScriptable m_weaponList;
+
+    [Header("Ability Settings")] 
+    public PlayerAbilityListScriptable m_abilityList;
 
     private List<List<int>> m_ropeConnections = new List<List<int>>();
     private List<List<int>> m_ropeDisconnections = new List<List<int>>();
@@ -52,13 +59,72 @@ public class MetricsManager : MonoBehaviour
         public int m_weaponStealSuccesses = 0;
 
     }
+
+    [Serializable]
+    public class WeaponMetrics
+    {
+        public string m_weaponName;
+        public float m_stealRate;
+
+        public void AddSteal()
+        {
+            m_stealCount++;
+        }
+
+        public void AddSpawn()
+        {
+            m_spawnCount++;
+        }
+
+        public void CalculateRate()
+        {
+            m_stealRate = (float)m_stealCount / m_spawnCount;
+        }
+
+        private int m_spawnCount;
+        private int m_stealCount;
+    }
+
+    [Serializable]
+    public class AbilityMetrics
+    {
+        public string m_abilityName;
+        public float m_activationRate;
+        
+        public void AddActivation()
+        {
+            m_activateCount++;
+        }
+
+        public void AddSpawn()
+        {
+            m_spawnCount++;
+        }
+
+        public void CalculateRate()
+        {
+            m_activationRate = (float)m_activateCount / m_spawnCount;
+        }
+        
+        private int m_spawnCount;
+        private int m_activateCount;
+    }
     
     [Serializable]
     public class MetricsData
     {
         public string m_sessionID;
         public List<LevelMetrics> m_levelMetricsData = new List<LevelMetrics>();
+        
+        // Weapon Steal Rate
+        public List<WeaponMetrics> m_weaponMetricsData = new List<WeaponMetrics>();
+        
+        // Ability Activation Rate
+        public List<AbilityMetrics> m_abilityMetricsData = new List<AbilityMetrics>();
+        
+        // Death By Enemy
 
+        
         public void Init()
         {
             // Initializing arrays to match with level
@@ -84,6 +150,22 @@ public class MetricsManager : MonoBehaviour
                 m_levelMetricsData.Add(level);
 
             }
+
+            for (int i = 0; i < Instance.m_weaponList.m_weapons.Count; i++)
+            {
+                WeaponMetrics weapon = new WeaponMetrics();
+                weapon.m_weaponName = Instance.m_weaponList.m_weapons[i].m_name;
+                
+                m_weaponMetricsData.Add(weapon);
+            }
+            
+            for (int i = 0; i < Instance.m_abilityList.m_abilities.Count; i++)
+            {
+                AbilityMetrics ability = new AbilityMetrics();
+                ability.m_abilityName = Instance.m_abilityList.m_abilities[i].m_name;
+                
+                m_abilityMetricsData.Add(ability);
+            }
         }
         
         public void RecordRopeOperations(int level, int wave, bool isConnection)
@@ -101,6 +183,70 @@ public class MetricsManager : MonoBehaviour
 
                 Debug.Log("Connection: " + m_levelMetricsData[level].m_ropeConnectionMetrics[wave]);
                 Debug.Log("Disconnection: " + m_levelMetricsData[level].m_ropeDisconnectionMetrics[wave]);
+            }
+        }
+
+        public void RecordWeaponSteal(string weaponName)
+        {
+            if (Instance.m_canRecord)
+            {
+                foreach (var weaponMetrics in m_weaponMetricsData)
+                {
+                    if (weaponMetrics.m_weaponName == weaponName)
+                    {
+                        weaponMetrics.AddSteal();
+                        weaponMetrics.CalculateRate();
+                        break;
+                    }
+                }
+            }
+        }
+
+        public void RecordWeaponSpawn(string weaponName)
+        {
+            if (Instance.m_canRecord)
+            {
+                foreach (var weaponMetrics in m_weaponMetricsData)
+                {
+                    if (weaponMetrics.m_weaponName == weaponName)
+                    {
+                        weaponMetrics.AddSpawn();
+                        weaponMetrics.CalculateRate();
+                        break;
+                    }
+                }
+            }
+        }
+
+        public void RecordAblityActivate(string abilityName)
+        {
+            if (Instance.m_canRecord)
+            {
+                foreach (var abilityMetrics in m_abilityMetricsData)
+                {
+                    if (abilityMetrics.m_abilityName == abilityName)
+                    {
+                        abilityMetrics.AddActivation();
+                        abilityMetrics.CalculateRate();
+                        break;
+                    }
+                }
+            }
+        }
+        
+        public void RecordAblitySpawn(string abilityName)
+        {
+            if (Instance.m_canRecord)
+            {
+                foreach (var abilityMetrics in m_abilityMetricsData)
+                {
+                    if (abilityMetrics.m_abilityName == abilityName)
+                    {
+                        abilityMetrics.AddSpawn();
+                        abilityMetrics.CalculateRate();
+                        break;
+                    }
+                }
             }
         }
 
@@ -168,12 +314,15 @@ public class MetricsManager : MonoBehaviour
     private void UponLevelCompleted()
     {
         // Recording rope operations to the metrics
-        for (int i = 0; i < m_levelData.m_levelNames.Count; i++)
+        if (m_canRecord)
         {
-            for (int j = 0; j < m_levelData.m_waveCount[i]; j++)
+            for (int i = 0; i < m_levelData.m_levelNames.Count; i++)
             {
-                m_metricsData.m_levelMetricsData[i].m_ropeConnectionMetrics[j] = m_ropeConnections[i][j];
-                m_metricsData.m_levelMetricsData[i].m_ropeDisconnectionMetrics[j] = m_ropeDisconnections[i][j];
+                for (int j = 0; j < m_levelData.m_waveCount[i]; j++)
+                {
+                    m_metricsData.m_levelMetricsData[i].m_ropeConnectionMetrics[j] = m_ropeConnections[i][j];
+                    m_metricsData.m_levelMetricsData[i].m_ropeDisconnectionMetrics[j] = m_ropeDisconnections[i][j];
+                }
             }
         }
     }

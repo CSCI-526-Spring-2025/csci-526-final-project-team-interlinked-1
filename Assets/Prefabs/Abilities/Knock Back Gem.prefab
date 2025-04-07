@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 8617432189424281335}
   - component: {fileID: 6362423424263417654}
   m_Layer: 6
-  m_Name: Dash Gem
+  m_Name: Knock Back Gem
   m_TagString: Loot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,7 +164,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 20
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: c11a5d4fc6f207d458e767d5c0c7c193, type: 3}
   m_Color: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 1}
   m_FlipX: 0
   m_FlipY: 1
@@ -277,11 +277,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70421ff116f99ea4183df5750d7eb8e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ability: {fileID: 11400000, guid: 9b0bc4a0f2fbd654fbf3221fd40036dc, type: 2}
+  m_ability: {fileID: 11400000, guid: c15d5d9d6f09e514dac0cc02fc03b55a, type: 2}
   m_maxUse: 5
   m_canDespawn: 1
   m_spriteRenderer: {fileID: 5669294375791699597}
-  m_type: 0
+  m_type: 1
   m_coolDownColor: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
   m_ropeComponent: {fileID: 8617432189424281335}
   m_lifeTime: 10
@@ -393,7 +393,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 9
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: c11a5d4fc6f207d458e767d5c0c7c193, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 1
@@ -420,7 +420,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &412187279571918083
 Transform:
   m_ObjectHideFlags: 0
