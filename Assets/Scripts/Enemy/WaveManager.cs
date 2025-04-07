@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class WaveManager : MonoBehaviour
@@ -13,19 +14,28 @@ public class WaveManager : MonoBehaviour
     public List<EnemySpawnScriptable> m_waves = new List<EnemySpawnScriptable>();
     public float m_waveCoolDown = 10.0f;
     public float m_spawnPadding = 1.0f;
-    public bool m_canSpawn = false;
     public LayerMask m_maskCheck;
+    public bool m_forceNotSpawn = false;
+    private bool m_canSpawn = false;
 
     [Serializable]
-    public class WaveObstacles
+    public class WaveDangers
     {
         public List<GameObject> m_obstacles;
     }
+
+    [Serializable]
+    public class WaveEnvironmentalObstacles
+    {
+        public List<MovingEnvironmentals> m_envObstacles;
+    }
+    
     
     [Header("Obstacle Settings")] 
     [Tooltip("Make sure you have the same number of entries as waves")]
-    public List<WaveObstacles> m_waveObstacles = new List<WaveObstacles>();
-    public List<GameObject> m_allObstacles = new List<GameObject>();
+    public List<WaveDangers> m_waveDangers = new List<WaveDangers>();
+    public List<WaveEnvironmentalObstacles> m_waveEnvironmentals = new List<WaveEnvironmentalObstacles>();
+    public List<GameObject> m_allWaveDangers = new List<GameObject>();
 
     private EnemySpawnScriptable m_currentWave;
     private float m_waveTime = 0.0f;
@@ -34,29 +44,69 @@ public class WaveManager : MonoBehaviour
     [Header("Enemy Tracking")]
     public List<GameObject> m_enemies = new List<GameObject>();
 
-    private IEnumerator Start()
+    private void Start()
     {
         SingletonMaster.Instance.EventManager.EnemyDeathEvent.AddListener(RemoveEnemy);
         SingletonMaster.Instance.EventManager.EnemyDeathEvent.AddListener(SpawnLoot);
-        
-        if (m_waves.Count > 0)
+        SingletonMaster.Instance.EventManager.LevelClearEvent.AddListener(OnLevelClear);
+    }
+
+    private void OnDisable()
+    {
+        SingletonMaster.Instance.EventManager.EnemyDeathEvent.RemoveListener(RemoveEnemy);
+        SingletonMaster.Instance.EventManager.EnemyDeathEvent.RemoveListener(SpawnLoot);
+        SingletonMaster.Instance.EventManager.LevelClearEvent.RemoveListener(OnLevelClear);
+    }
+    
+    private void OnLevelClear()
+    {
+        foreach (var obstacle in m_allWaveDangers)
         {
+            obstacle.SetActive(false);
+        }
+    }
+
+    public void StartWaves()
+    {
+        StartCoroutine(StartMyWaves());
+    }
+
+    private IEnumerator StartMyWaves()
+    {
+        if (m_waves.Count > 0 && !m_forceNotSpawn)
+        {
+            m_canSpawn = true;
             m_currentWave = m_waves[0];
             m_maxEnemyCount = m_currentWave.m_maxEnemyCount;
             m_waveTime = m_currentWave.m_waveTime;
-            
+
             yield return null;
             
             SingletonMaster.Instance.EventManager.NextWaveEvent.Invoke(m_currentWave);
             
             // TODO: This code is shit lol
-            foreach (var obstacle in m_allObstacles)
+            foreach (var obstacle in m_allWaveDangers)
             {
                 obstacle.SetActive(false);
             }
-            foreach (var obstacle in m_waveObstacles[m_waveCount].m_obstacles)
+
+            if (m_waveCount < m_waveDangers.Count && m_waveCount < m_waveEnvironmentals.Count)
             {
-                obstacle.SetActive(true);
+                foreach (var obstacle in m_waveDangers[m_waveCount].m_obstacles)
+                {
+                    obstacle.SetActive(true);
+                }
+
+                // Start moving environmentals
+                foreach (var obstacle in m_waveEnvironmentals[m_waveCount].m_envObstacles)
+                {
+                    Debug.Log("Moving: " + obstacle.gameObject);
+                    obstacle.StartMoving();
+                }
+            }
+            else
+            {
+                Debug.LogError("The wave dangers or wave environmental obstacles are NOT setup properly according to number of waves");
             }
         }
         else
@@ -66,24 +116,33 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        SingletonMaster.Instance.EventManager.EnemyDeathEvent.RemoveListener(RemoveEnemy);
-        SingletonMaster.Instance.EventManager.EnemyDeathEvent.RemoveListener(SpawnLoot);
-    }
-
     private IEnumerator StartCooldown()
     {
         m_canSpawn = false;
         if (m_waveCount < m_waves.Count - 1)
         {
-            foreach (var obstacle in m_allObstacles)
+            foreach (var obstacle in m_allWaveDangers)
             {
                 obstacle.SetActive(false);
             }
-            
+
+            if (m_waveCount < m_waveDangers.Count && m_waveCount < m_waveEnvironmentals.Count)
+            {
+                // Moving back environmentals
+                foreach (var obstacle in m_waveEnvironmentals[m_waveCount].m_envObstacles)
+                {
+                    obstacle.MoveBack();
+                }
+            }
+            else
+            {
+                Debug.LogError("The wave environmental obstacles are NOT setup properly according to number of waves");
+            }
+
             SingletonMaster.Instance.EventManager.CooldownStarted.Invoke(m_waveCoolDown);
             yield return new WaitForSeconds(m_waveCoolDown);
+            
+            // New wave
             m_waveCount++;
             m_currentWave = m_waves[m_waveCount];
             m_maxEnemyCount = m_currentWave.m_maxEnemyCount;
@@ -93,10 +152,24 @@ public class WaveManager : MonoBehaviour
             
             // New Wave
             SingletonMaster.Instance.EventManager.NextWaveEvent.Invoke(m_currentWave);
-            
-            foreach (var obstacle in m_waveObstacles[m_waveCount].m_obstacles)
+
+            if (m_waveCount < m_waveDangers.Count && m_waveCount < m_waveEnvironmentals.Count)
             {
-                obstacle.SetActive(true);
+                foreach (var obstacle in m_waveDangers[m_waveCount].m_obstacles)
+                {
+                    obstacle.SetActive(true);
+                }
+                
+                // Start moving environmentals
+                foreach (var obstacle in m_waveEnvironmentals[m_waveCount].m_envObstacles)
+                {
+                    Debug.Log("Moving: " + obstacle.gameObject);
+                    obstacle.StartMoving();
+                }
+            }
+            else
+            {
+                Debug.LogError("The wave dangers or wave environmental obstacles are NOT setup properly according to number of waves");
             }
         }
         else
@@ -106,7 +179,7 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (m_canSpawn)
         {
