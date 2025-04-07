@@ -1,0 +1,1632 @@
+{
+  "-OMyIveBbZRp5NZrIFPd": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0.4000000059604645
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638792999356247868",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0.20000000298023224,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMyNJUnvZcC6kWw2tqY": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793011102563633",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0.1111111119389534,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMyR83W6c8oFJsqh9B-": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793021319564246",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMySDCk6wb4u3tON5qf": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 1
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793024102185934",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMySSqvo0-Llj4f9S-G": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793024892283476",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMySrfbSjEoML6DOu6A": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 1
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793025908429669",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMyT9eU7jeahqUB_eqD": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0.5
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 1,
+        "m_deathLocations": [
+          {
+            "x": -18.61888885498047,
+            "y": -10.551084518432617
+          }
+        ],
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793026104507551",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMyU2678S6jiWWQd8Nt": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0.5
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793028824580511",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMyUcVKi9NxTynVN2S6": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0.75
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793029622544828",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0.27272728085517883,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMygHJ7AhyCtMR-qWFR": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793063685319181",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMyhOHu_U7PKUxaKWew": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793066442619393",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0.3333333432674408,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMyi-AUEU3PNrMOPN4W": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793068114752674",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMyiDC1T4pPDwyV6XwP": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 1,
+        "m_deathLocations": [
+          {
+            "x": -10.685155868530273,
+            "y": 12.741311073303223
+          }
+        ],
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793068598186995",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0.1666666716337204,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMyij2ZCkxE93-42K_Q": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 1,
+        "m_deathLocations": [
+          {
+            "x": 1.0729117393493652,
+            "y": 8.720562934875488
+          }
+        ],
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793069746981021",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0.2857142984867096,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMykB94xZMqHT1yKvoR": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793073863741594",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMykWuQLw4m3upyYU_w": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0.3333333432674408
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793074288950408",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0.20000000298023224,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMykemIwsuB4eDl2PL8": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793075160610271",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMykyY1F9H0Yw6UF0Ks": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793075919870957",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMym4DYAx8IpjI3z4e_": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 1,
+        "m_deathLocations": [
+          {
+            "x": -28.371978759765625,
+            "y": -0.40891122817993164
+          }
+        ],
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793078292411917",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMymqzFC6WpYBI4o6it": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0.25
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0.3333333432674408
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 1,
+        "m_deathLocations": [
+          {
+            "x": -31.46573257446289,
+            "y": -14.437928199768066
+          }
+        ],
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793079365753027",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMynQUlG3uh3SK0e03o": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0.3333333432674408
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793081994239423",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0.07692307978868484,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMynqVt5ymp-OSavCHB": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0.3333333432674408
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 1,
+        "m_deathLocations": [
+          {
+            "x": -35.3286247253418,
+            "y": -6.435803413391113
+          }
+        ],
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793082919693008",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0.125,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMyoWX-FQWhjqt6dT6i": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793084309502274",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0.0714285746216774,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMypLIbLlE1OFZ6cSzt": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 1,
+        "m_deathLocations": [
+          {
+            "x": -3.2918753623962402,
+            "y": -4.590155601501465
+          }
+        ],
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793087240483233",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0.09090909361839294,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMyq7_TJxqduT-f6-F3": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793089421840891",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMyr2rm_Y8ktpGOXOT9": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0.25
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 1,
+        "m_deathLocations": [
+          {
+            "x": 1.8002322912216187,
+            "y": -15.142205238342285
+          }
+        ],
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793090523294221",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMyrbd_O9ILzCTTojFv": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0.25
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0.3333333432674408
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793092793260745",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMysIg6n7Po9nhsTN0E": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0.3333333432674408
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 1,
+        "m_deathLocations": [
+          {
+            "x": 28.398494720458984,
+            "y": 6.702735900878906
+          }
+        ],
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793094758765559",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0.0625,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMysmLj-88QHleEdv94": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0.20000000298023224
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 1,
+        "m_deathLocations": [
+          {
+            "x": 2.3030707836151123,
+            "y": -10.355891227722168
+          }
+        ],
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793095566589288",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0.125,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-OMz3sT2aGmOi5eFEW89": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 2,
+        "m_deathLocations": [
+          {
+            "x": 10.312886238098145,
+            "y": -3.2903378009796143
+          },
+          {
+            "x": -1.6805274486541748,
+            "y": -10.888540267944336
+          }
+        ],
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793126642911069",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0.09677419066429138,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-ON1_RaeOPYOTgAOy2Ie": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793716876846751",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  },
+  "-ON1_UwK_eWBQ-o40CoG": {
+    "m_abilityMetricsData": [
+      {
+        "m_abilityName": "Dash",
+        "m_activationRate": 0
+      },
+      {
+        "m_abilityName": "Knock Back",
+        "m_activationRate": 0
+      }
+    ],
+    "m_levelMetricsData": [
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Main Menu"
+      },
+      {
+        "m_deathCount": 0,
+        "m_levelName": "Beta-Cavern",
+        "m_ropeConnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "m_ropeDisconnectionMetrics": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "m_sessionID": "638793717004476479",
+    "m_weaponMetricsData": [
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Mace"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Pistol Turret"
+      },
+      {
+        "m_stealRate": 0,
+        "m_weaponName": "Sniper Turret"
+      }
+    ]
+  }
+}
