@@ -402,7 +402,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_Sprite: {fileID: 2747690628134850419, guid: 16037dbd798344f57a526d53d48f5ead, type: 3}
-  m_Color: {r: 1, g: 0.27987415, b: 0.27987415, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.2509804, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -500,7 +500,11 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
+<<<<<<< Updated upstream
   m_InstanceId: 110414
+=======
+  m_InstanceId: 38620
+>>>>>>> Stashed changes
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.5, y: 0.5, z: 0}
@@ -525,7 +529,12 @@ MonoBehaviour:
   - LOL
   - Lmao
   m_healthComponent: {fileID: 7796390014458754966}
+<<<<<<< Updated upstream
   m_damage: 0
+=======
+  m_damage: 0.5
+  m_damageReduceFactor: 0.25
+>>>>>>> Stashed changes
   m_collisionVelocityThreshold: 20
   m_AI: {fileID: 5981943359898612371}
   m_spriteRenderer: {fileID: 7042170540264289223}
@@ -545,9 +554,12 @@ MonoBehaviour:
   m_maxSpeed: 8
   m_numDirections: 12
   m_raycastDistance: 5
+  m_surroundDistance: 6
   m_pathfindIgnoreMasks:
     serializedVersion: 2
     m_Bits: 900
+  m_invisibleThreshold: 5
+  m_moveTarget: {fileID: 0}
   m_face: {fileID: 937716095072471460}
   m_faceMoveFactor: 0.25
 --- !u!114 &6942400378454032155
@@ -570,9 +582,10 @@ MonoBehaviour:
   m_ropeLength: 20
   m_isConnectedToPlayer: 0
   m_isConnectedToEnemy: 0
+  m_isEnemy: 0
   m_usingRopePrefab: {fileID: 3641976607573275392, guid: 53eb2b1c72877f04f9c206bab1cc2f2a, type: 3}
-  m_maxTension: 500
-  m_tensionDuration: 1
+  m_enemyJoint: {fileID: 0}
+  m_playerJoint: {fileID: 0}
   m_orgEnemyRopeColor: {r: 0, g: 0, b: 0, a: 0}
   m_highlight: {fileID: 2171191199530265972}
   m_connectColor: {r: 1, g: 1, b: 1, a: 1}
@@ -593,6 +606,7 @@ MonoBehaviour:
   m_health: 15
   m_maxHealth: 15
   m_invincibleTime: 1
+  m_cooldownRecoverRate: 1
   DamageEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -600,6 +614,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_isLinked: 0
+  m_isHealing: 0
+  m_healer: {fileID: 0}
   m_playerDeath: {fileID: 0}
   m_enemyDeath: {fileID: 4255317271503354296, guid: 524e343b03c7aec4bac75a80c1713cca, type: 3}
 --- !u!1 &4250496150385911655
@@ -783,7 +799,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 129217800401549174, guid: 219358c2bd6c70b43b8350bd9cfd8d2f, type: 3}
       propertyPath: m_InstanceId
+<<<<<<< Updated upstream
       value: -311964
+=======
+      value: -12504
+>>>>>>> Stashed changes
       objectReference: {fileID: 0}
     - target: {fileID: 1538797734825165177, guid: 219358c2bd6c70b43b8350bd9cfd8d2f, type: 3}
       propertyPath: m_Layer

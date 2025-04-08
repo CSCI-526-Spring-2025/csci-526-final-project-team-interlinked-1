@@ -40,6 +40,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6839203773940049152}
     m_Modifications:
+    - target: {fileID: 394886833122550638, guid: dfee9bca8416b764ba213b1a5d15f804, type: 3}
+      propertyPath: m_Color.b
+      value: 0.2509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 394886833122550638, guid: dfee9bca8416b764ba213b1a5d15f804, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 950798980718835520, guid: dfee9bca8416b764ba213b1a5d15f804, type: 3}
       propertyPath: m_damage
       value: 4
@@ -54,7 +62,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1288623042125281327, guid: dfee9bca8416b764ba213b1a5d15f804, type: 3}
       propertyPath: m_InstanceId
+<<<<<<< Updated upstream
       value: -44944
+=======
+      value: -15140
+>>>>>>> Stashed changes
       objectReference: {fileID: 0}
     - target: {fileID: 1829588942597929290, guid: dfee9bca8416b764ba213b1a5d15f804, type: 3}
       propertyPath: m_maxSpeed

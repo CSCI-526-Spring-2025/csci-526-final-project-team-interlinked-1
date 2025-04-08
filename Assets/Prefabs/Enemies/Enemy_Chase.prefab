@@ -165,7 +165,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_Sprite: {fileID: -2413806693520163455, guid: c11a5d4fc6f207d458e767d5c0c7c193, type: 3}
-  m_Color: {r: 1, g: 0.27450982, b: 0.2784314, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.2509804, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -263,7 +263,7 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 47930
+  m_InstanceId: 38770
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.5, y: 0.5, z: 0}
@@ -279,13 +279,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 277a0e4fb299be744a15aa5d6c3abff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_state: 3
   m_acceleration: 20
   m_maxSpeed: 8
   m_numDirections: 12
   m_raycastDistance: 5
+  m_surroundDistance: 6
   m_pathfindIgnoreMasks:
     serializedVersion: 2
     m_Bits: 900
+  m_invisibleThreshold: 5
+  m_moveTarget: {fileID: 0}
   m_face: {fileID: 0}
   m_faceMoveFactor: 0.25
 --- !u!114 &1268515467035787445
@@ -303,6 +307,7 @@ MonoBehaviour:
   m_names: []
   m_healthComponent: {fileID: 2200367533731653901}
   m_damage: 2
+  m_damageReduceFactor: 0.25
   m_collisionVelocityThreshold: 10
   m_AI: {fileID: 0}
   m_spriteRenderer: {fileID: 7122005983552883497}
@@ -324,6 +329,7 @@ MonoBehaviour:
   m_health: 5
   m_maxHealth: 5
   m_invincibleTime: 1
+  m_cooldownRecoverRate: 1
   DamageEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -331,6 +337,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_isLinked: 0
+  m_isHealing: 0
+  m_healer: {fileID: 0}
   m_playerDeath: {fileID: 0}
   m_enemyDeath: {fileID: 4255317271503354296, guid: 524e343b03c7aec4bac75a80c1713cca, type: 3}
 --- !u!1 &7145515124838183232
