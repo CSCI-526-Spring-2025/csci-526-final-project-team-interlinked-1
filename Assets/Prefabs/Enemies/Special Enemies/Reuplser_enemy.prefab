@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6839203773940049152}
   m_Layer: 9
-  m_Name: Reuplser_enemy
+  m_Name: Reuplser_Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

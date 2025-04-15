@@ -211,7 +211,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6839203773940049152}
   m_Layer: 9
-  m_Name: Projectile_Enemy_V2 1
+  m_Name: Mace_Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
