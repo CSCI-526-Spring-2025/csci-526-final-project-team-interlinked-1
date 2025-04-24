@@ -15,6 +15,7 @@ public class BaseEnemyBehavior : MonoBehaviour
     public List<string> m_names = new List<string>();
     public HealthComponent m_healthComponent;
     public float m_damage = 2.0f;
+    [SerializeField] private float m_damageReduceFactor = 0.25f;
     public float m_collisionVelocityThreshold = 10.0f;
     
     [Header("AI Settings")]
@@ -24,7 +25,7 @@ public class BaseEnemyBehavior : MonoBehaviour
     [SerializeField] private SpriteRenderer m_spriteRenderer;
     
     public float m_lootDropRate { get; set; } = 0.0f;
-
+    
     private bool m_canBeTossed = false;
     private Color m_orgColor;
     private Vector3 m_orgScale;
@@ -36,9 +37,6 @@ public class BaseEnemyBehavior : MonoBehaviour
     {
         m_orgColor = m_spriteRenderer.color;
         m_orgScale = transform.localScale;
-
-        // Start spawn as trigger
-        GetComponent<Collider2D>().isTrigger = true;
         
         SingletonMaster.Instance.EventManager.LinkEvent.AddListener(OnLinked);
         SingletonMaster.Instance.EventManager.UnlinkEvent.AddListener(OnUnlinked);
@@ -56,6 +54,7 @@ public class BaseEnemyBehavior : MonoBehaviour
         {
             if (obj == gameObject && instigator.CompareTag("Player"))
             {
+                m_damage /= m_damageReduceFactor;
                 m_canBeTossed = false;
             }
         }
@@ -67,6 +66,7 @@ public class BaseEnemyBehavior : MonoBehaviour
         {
             if (obj == gameObject && instigator.CompareTag("Player"))
             {
+                m_damage *= m_damageReduceFactor;
                 m_canBeTossed = true;
             }
         }
@@ -108,33 +108,13 @@ public class BaseEnemyBehavior : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.CompareTag("Background") && GetComponent<Collider2D>().isTrigger)
-        {
-            GetComponent<Collider2D>().isTrigger = false;
-            if (SingletonMaster.Instance.FeelManager.m_wallParticles != null)
-            {
-                SingletonMaster.Instance.FeelManager.m_wallParticles.PlayFeedbacks(transform.position);
-            }
-        }
-    }
-
-    private void OnCollisionStay2D(Collision2D other)
-    {
-        if (other.collider.CompareTag("Player"))
+        else if (other.collider.CompareTag("Player"))
         {
             HealthComponent health = other.gameObject.GetComponent<HealthComponent>();
             if (health != null)
             {
                 health.DamageEvent.Invoke(m_damage, gameObject);
             }
-        }
-        else if (other.collider.CompareTag("Border"))
-        {
-            m_healthComponent.DamageEvent.Invoke(0.1f, gameObject);
         }
     }
 }
