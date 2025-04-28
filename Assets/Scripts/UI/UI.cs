@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class UI : MonoBehaviour
 {
     public TextMeshProUGUI m_finalMessageText;
-    public TextMeshProUGUI m_waveText;
     public TextMeshProUGUI m_announcementText;
     public TextMeshProUGUI m_ropeCountText;
     public GameObject m_playerHealthBar;
@@ -17,11 +16,14 @@ public class UI : MonoBehaviour
     public GameObject m_durabilityBarPrefab;
     public GameObject m_worldSpaceUIParent;
     public GameObject m_pauseMenu;
+    public GameObject m_waveProgress;
+    public Image m_waveFill;
 
     // private bool shrinkingTriggered = false; // Ensures shrinking starts only once per wave
     private int m_killCount = 0;
-    private float m_waveTime = -1.0f; // Prevents shrinking from starting immediately
+    private float m_waveTime = 0.0f;
     private int m_waveCount = 0;
+    private float m_totalWaveTime = 0.0f;
     private bool waveActive = false; // Tracks if a wave is active
 
     private Queue<string> m_announcementQueue = new Queue<string>(); // Queue to handle multiple announcements
@@ -30,6 +32,8 @@ public class UI : MonoBehaviour
 
     private int m_maxConnections = 0;
     private bool m_isPlayerDead = false;
+
+    private bool m_canIncreaseProgress = false;
 
     private void Start()
     {
@@ -46,6 +50,8 @@ public class UI : MonoBehaviour
             healthBarComp.m_healthComp = SingletonMaster.Instance.PlayerBase.gameObject.GetComponent<HealthComponent>();
 
             m_maxConnections = SingletonMaster.Instance.PlayerBase.m_maxRopeConnections;
+            
+            SetupWaveUI();
         }
     }
 
@@ -53,6 +59,7 @@ public class UI : MonoBehaviour
     {
         if (SingletonMaster.Instance.PlayerBase != null)
         {
+            m_canIncreaseProgress = false;
             // Using the old version for now
             m_announcementText.enabled = true;
             m_announcementText.text = "Kill all leftover enemies";
@@ -61,13 +68,13 @@ public class UI : MonoBehaviour
 
     private void OnUpdateWave(EnemySpawnScriptable wave)
     {
-        if (!m_waveText.enabled)
+        if (!m_waveProgress.activeInHierarchy)
         {
-            m_waveText.enabled = true;
+            m_canIncreaseProgress = true;
+            m_waveProgress.SetActive(true);
         }
         
         Debug.Log($"New wave started! Wave Time: {wave.m_waveTime}");
-        m_waveTime = wave.m_waveTime; // Set wave duration dynamically from EnemyManager
         m_waveCount++;
         // shrinkingTriggered = false; // Reset shrinking flag for the new wave
         waveActive = true; // Mark the wave as active
@@ -87,31 +94,33 @@ public class UI : MonoBehaviour
     {
         if (SingletonMaster.Instance.PlayerBase != null)
         {
-            m_waveTime -= Time.deltaTime;
-            if (m_waveTime < 0.0f)
+            if (m_canIncreaseProgress)
             {
-                m_waveTime = 0.0f; // Prevent negative values
+                m_waveTime += Time.deltaTime;
             }
+
+            m_waveFill.fillAmount = m_waveTime / m_totalWaveTime;
             
-            m_waveText.text = $"Wave Time: {m_waveTime:F2}  Wave Count: {m_waveCount}";
+            // m_waveText.text = $"Wave Time: {m_waveTime:F2}  Wave Count: {m_waveCount}";
             m_ropeCountText.text = "ROPE: " + (SingletonMaster.Instance.PlayerBase.m_linkedObjects.Count - 1) + "/" +
                                    m_maxConnections;
         }
         else
         {
-            m_waveText.text = $"Wave Time: You Died...  Wave Count: {m_waveCount}";
+            // m_waveText.text = $"Wave Time: You Died...  Wave Count: {m_waveCount}";
             m_ropeCountText.text = "ROPE: DEAD/" + m_maxConnections;
         }
     }
 
 
-    public GameObject AddHealthBar(HealthComponent healthComponent)
+    public GameObject AddHealthBar(HealthComponent healthComponent, float offset = -1.0f)
     {
         Debug.Log("Added health bar: " + healthComponent.gameObject);
         if (healthComponent.gameObject.CompareTag("Enemy"))
         {
             GameObject newHealthBar = Instantiate(m_enemyHealthBarPrefab, m_worldSpaceUIParent.transform, true);
             HealthBar healthBarComp = newHealthBar.GetComponent<HealthBar>();
+            healthBarComp.m_offset.y = offset;
             healthBarComp.m_healthComp = healthComponent;
             return newHealthBar;
         }
@@ -130,6 +139,7 @@ public class UI : MonoBehaviour
     {
         if (!m_isPlayerDead)
         {
+            m_canIncreaseProgress = false;
             StartCoroutine(CooldownSequence(time));
         }
     }
@@ -143,6 +153,7 @@ public class UI : MonoBehaviour
             time -= Time.deltaTime;
         }
         m_announcementText.enabled = false;
+        m_canIncreaseProgress = true;
     }
 
     private void AddKill(GameObject enemy)
@@ -203,5 +214,13 @@ public class UI : MonoBehaviour
         m_pauseMenu.SetActive(false);
         Time.timeScale = 1.0f;
         GameManager.Instance.m_gamePaused = false;
+    }
+
+    private void SetupWaveUI()
+    {
+        foreach (var wave in SingletonMaster.Instance.WaveManager.m_waves)
+        {
+            m_totalWaveTime += wave.m_waveTime;
+        }
     }
 }
