@@ -31,6 +31,9 @@ public class MeleeComponent : MonoBehaviour
     {
         m_RB = GetComponent<Rigidbody2D>();
         
+        // Start spawn as trigger
+        GetComponent<Collider2D>().isTrigger = true;
+        
         SingletonMaster.Instance.EventManager.StartFireEvent.AddListener(StartFiring);
         SingletonMaster.Instance.EventManager.StopFireEvent.AddListener(StopFiring);
         
@@ -114,6 +117,12 @@ public class MeleeComponent : MonoBehaviour
 
     private void Update()
     {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.value);
+
+        if (m_isMouseDown)
+        {
+            
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -136,6 +145,14 @@ public class MeleeComponent : MonoBehaviour
             {
                 health.DamageEvent.Invoke(m_playerDamage, gameObject);
             }
+        }
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Background") && GetComponent<Collider2D>().isTrigger)
+        {
+            GetComponent<Collider2D>().isTrigger = false;
         }
     }
 }

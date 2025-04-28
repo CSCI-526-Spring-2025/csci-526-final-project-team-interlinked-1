@@ -24,7 +24,6 @@ public class DashEnemyAI : BaseEnemyAI
 
     private bool m_isDashing = false;
     private bool m_dashCooled = true;
-    private bool m_canDash = true;
 
     private Coroutine m_cooldownRoutine = null;
     
@@ -37,34 +36,12 @@ public class DashEnemyAI : BaseEnemyAI
         {
             m_moveTarget = SingletonMaster.Instance.PlayerBase.gameObject;
         }
-        
-        SingletonMaster.Instance.EventManager.LinkEvent.AddListener(OnLinked);
-        SingletonMaster.Instance.EventManager.UnlinkEvent.AddListener(OnUnlinked);
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
 
-        SingletonMaster.Instance.EventManager.LinkEvent.RemoveListener(OnLinked);
-        SingletonMaster.Instance.EventManager.UnlinkEvent.RemoveListener(OnUnlinked);
-    }
-    
-    private void OnUnlinked(GameObject obj, GameObject instigator)
-    {
-        if (obj == gameObject && !m_canDash)
-        {
-            m_canDash = true;
-        }
-    }
-
-    private void OnLinked(GameObject obj, GameObject instigator)
-    {
-        if (obj == gameObject && m_canDash)
-        {
-            m_canDash = false;
-            m_telegraph.DOKill(true);
-        }
     }
     
     protected override void FixedUpdate()
@@ -94,19 +71,6 @@ public class DashEnemyAI : BaseEnemyAI
                 }
             }
 
-            if (m_willTurnToPlayer)
-            {
-                if (m_moveTarget != null && !m_isDashing && !GetComponent<Collider2D>().isTrigger)
-                {
-                    Vector3 toTarget = (m_moveTarget.transform.position - transform.position).normalized;
-                    Quaternion targetQuat = Quaternion.LookRotation(toTarget, Vector3.forward);
-                    Quaternion rotQuat = Quaternion.Slerp(transform.rotation, targetQuat, Time.deltaTime * 10.0f);
-                    m_RB.MoveRotation(rotQuat);
-                    
-                    faceDir = transform.InverseTransformDirection(faceDir);
-                }
-            }
-            
             // moving face
             m_face.transform.localPosition = faceDir * m_faceMoveFactor;
             
@@ -115,15 +79,13 @@ public class DashEnemyAI : BaseEnemyAI
 
     private void DashAttack()
     {
-        if (!m_isDashing && m_dashCooled && m_canDash)
+        if (!m_isDashing && m_dashCooled)
         {
+            m_dashCooled = false;
             m_isDashing = true;
             
-            GetComponent<HealthComponent>().m_canDamage = false;
-            
             m_telegraph.enabled = true;
-            m_telegraph.SetPosition(0, m_telegraph.transform.InverseTransformPoint(transform.position));
-            m_telegraph.SetPosition(1, m_telegraph.transform.InverseTransformPoint(m_moveTarget.transform.position));
+            m_telegraph.SetPosition(1, transform.InverseTransformPoint(m_moveTarget.transform.position));
 
             Vector3 dashDir = (m_moveTarget.transform.position - transform.position).normalized;
 
@@ -140,16 +102,7 @@ public class DashEnemyAI : BaseEnemyAI
                     m_telegraph.endColor = orgEnd;
                     
                     m_telegraph.enabled = false;
-
-                    if (m_canDash)
-                    {
-                        StartCoroutine(Dash(dashDir));
-                    }
-                    else
-                    {
-                        m_isDashing = false;
-                        GetComponent<HealthComponent>().m_canDamage = true;
-                    }
+                    StartCoroutine(Dash(dashDir));
                 });
         }
     }
@@ -175,15 +128,12 @@ public class DashEnemyAI : BaseEnemyAI
         {
             m_dasherState = DasherState.Idle;
         }
-        
-        GetComponent<HealthComponent>().m_canDamage = true;
 
         m_cooldownRoutine = StartCoroutine(DashCooldown());
     }
 
     private IEnumerator DashCooldown()
     {
-        m_dashCooled = false;
         yield return new WaitForSeconds(m_dashTimeout);
         m_dashCooled = true;
     }
@@ -201,9 +151,14 @@ public class DashEnemyAI : BaseEnemyAI
             {
                 m_dasherState = DasherState.Idle;
             }
-            else
+            else if (!m_isDashing)
             {
-                m_dasherState = DasherState.MovingToPlayer;
+                if (m_cooldownRoutine != null)
+                {
+                    StopCoroutine(m_cooldownRoutine);
+                    m_dashCooled = true;
+                    m_dasherState = DasherState.MovingToPlayer;
+                }
             }
         }
     }

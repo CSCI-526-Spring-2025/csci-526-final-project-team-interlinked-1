@@ -48,7 +48,6 @@ public class PlayerBase : MonoBehaviour
     [SerializeField] private float m_faceMoveFactor = 0.25f;
     [SerializeField] private MMF_Player m_dashParticles;
     [SerializeField] private MMF_Player m_knockBackParticles;
-    public GameObject m_ropeRangeIndicator;
     public bool m_isFollowCam = true;
 
     [Header("Ability")] 
@@ -68,8 +67,6 @@ public class PlayerBase : MonoBehaviour
 
     private GameObject m_bestRopeConnectTarget = null;
     private GameObject m_bestRopeDisconnectTarget = null;
-
-    private bool m_isRagdolling = false;
 
     private void Start()
     {
@@ -97,9 +94,6 @@ public class PlayerBase : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
-
-        m_ropeRangeIndicator.transform.localScale =
-            new Vector3(m_connectRadius * 2, m_connectRadius * 2, m_connectRadius * 2);
     }
 
     private void OnUnlinkedItem(GameObject obj, GameObject instigator)
@@ -152,7 +146,7 @@ public class PlayerBase : MonoBehaviour
         if (this != null)
         {
             transform.position = Vector3.zero;
-            // StartCoroutine(InitCoroutine());
+            StartCoroutine(InitCoroutine());
         }
     }
 
@@ -189,23 +183,11 @@ public class PlayerBase : MonoBehaviour
         if (!m_isDashing)
         {
             m_RB.velocity += m_moveDirection * m_acceleration * Time.fixedDeltaTime;
-            if (!m_isRagdolling && m_RB.velocity.magnitude > m_maxSpeed)
+            if (m_RB.velocity.magnitude > m_maxSpeed)
             {
                 m_RB.velocity = m_moveDirection * m_maxSpeed;
             }
         }
-    }
-
-    public void StartRagdoll()
-    {
-        StartCoroutine(Ragdoll());
-    }
-
-    private IEnumerator Ragdoll()
-    {
-        m_isRagdolling = true;
-        yield return new WaitForSeconds(0.15f);
-        m_isRagdolling = false;
     }
 
     /// <summary>
