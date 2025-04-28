@@ -2,41 +2,42 @@ import json
 import pandas as pd
 from google.colab import files
 
-# STEP 1: Upload your JSON file (e.g. interlink-metrics-default-rtdb-export-2.json)
-filename = "/content/interlink-metrics-default-rtdb-export-2.json"
+# Step 1: Specify the JSON file path
+file_path = "/content/interlink-metrics-default-rtdb-export-2.json"
 
-# STEP 2: Load and parse the JSON
-with open(filename, 'r') as f:
-    data = json.load(f)
+# Step 2: Load the JSON data
+with open(file_path, "r") as file:
+    all_sessions = json.load(file)
 
-# STEP 3: Extract metrics for Beta-Cavern and Beta-Vines
-levels_of_interest = ["Beta-Cavern", "Beta-Vines"]
-wave_labels = ["Wave 1", "Wave 2", "Wave 3", "Wave 4"]
+# Step 3: Define target levels and waves
+target_levels = ["Beta-Cavern", "Beta-Vines"]
+wave_names = ["Wave 1", "Wave 2", "Wave 3", "Wave 4"]
 
-records = []
+# Step 4: Extract rope connection/disconnection metrics
+metrics = []
 
-for session_id, session in data.items():
-    level_metrics = session.get("m_levelMetricsData", [])
-    for level in level_metrics:
-        level_name = level.get("m_levelName")
-        if level_name in levels_of_interest:
-            conn = level.get("m_ropeConnectionMetrics", [])
-            disc = level.get("m_ropeDisconnectionMetrics", [])
-            if conn and disc and len(conn) == 4 and len(disc) == 4:
-                for i in range(4):
-                    records.append({
+for session_id, session_data in all_sessions.items():
+    for level_data in session_data.get("m_levelMetricsData", []):
+        level_name = level_data.get("m_levelName")
+        if level_name in target_levels:
+            connections = level_data.get("m_ropeConnectionMetrics", [])
+            disconnections = level_data.get("m_ropeDisconnectionMetrics", [])
+
+            if len(connections) == len(disconnections) == 4:
+                for wave_index in range(4):
+                    metrics.append({
                         "Session": session_id,
                         "Level": level_name,
-                        "Wave": wave_labels[i],
-                        "Rope Connections": conn[i],
-                        "Rope Disconnections": disc[i]
+                        "Wave": wave_names[wave_index],
+                        "Rope Connections": connections[wave_index],
+                        "Rope Disconnections": disconnections[wave_index]
                     })
 
-# STEP 4: Convert to DataFrame and save to CSV
-df = pd.DataFrame(records)
-csv_filename = "/content/rope_metrics_beta_levels.csv"
-df.to_csv(csv_filename, index=False)
-files.download(csv_filename)
+# Step 5: Create a DataFrame and save to CSV
+df = pd.DataFrame(metrics)
+output_file = "/content/rope_metrics_beta_levels.csv"
+df.to_csv(output_file, index=False)
+files.download(output_file)
 
-# Optional Preview
+# Step 6: Optional preview
 df.head()
