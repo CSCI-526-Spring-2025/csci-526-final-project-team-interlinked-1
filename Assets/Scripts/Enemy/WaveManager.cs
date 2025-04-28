@@ -49,6 +49,11 @@ public class WaveManager : MonoBehaviour
         SingletonMaster.Instance.EventManager.EnemyDeathEvent.AddListener(RemoveEnemy);
         SingletonMaster.Instance.EventManager.EnemyDeathEvent.AddListener(SpawnLoot);
         SingletonMaster.Instance.EventManager.LevelClearEvent.AddListener(OnLevelClear);
+        
+        foreach (var obstacle in m_allWaveDangers)
+        {
+            obstacle.SetActive(false);
+        }
     }
 
     private void OnDisable()
@@ -227,7 +232,7 @@ public class WaveManager : MonoBehaviour
             
             // Checking spawn security
             RaycastHit2D[] hits = new RaycastHit2D[10];
-            int hitNum = Physics2D.CircleCastNonAlloc(spawnPos, 10.0f, Vector2.zero, hits, 0.0f,
+            int hitNum = Physics2D.CircleCastNonAlloc(spawnPos, 5.0f, Vector2.zero, hits, 0.0f,
                 m_maskCheck);
             if (hitNum == 0)
             {

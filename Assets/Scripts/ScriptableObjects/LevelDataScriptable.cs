@@ -7,6 +7,8 @@ namespace ScriptableObjects
     public class LevelDataScriptable : ScriptableObject
     {
         public bool m_needsTutorial = false;
+        public bool m_needsLevelName = false;
+        public bool m_needsRopeRangeIndicator = false;
         public List<string> m_levelNames = new List<string>();
         public List<int> m_waveCount;
     }

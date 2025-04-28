@@ -12,11 +12,14 @@ public class GameManager : MonoBehaviour
 
     public LevelDataScriptable m_levelData;
     
+    public bool m_gamePaused = false;
+    
     private GameObject SingletonMasterObject;
 
     private bool m_playerWon = false;
     private int m_curLevel = 1;
     private bool m_canRestart = false;
+    private bool m_canPause = true;
     
     private void Awake()
     {
@@ -38,10 +41,29 @@ public class GameManager : MonoBehaviour
         m_playerWon = false;
         SingletonMasterObject = GameObject.Find("Singleton Master");
 
+        if (scene.name == "Main Menu")
+        {
+            m_canPause = false;
+        }
+        else
+        {
+            m_canPause = true;
+        }
+
         // TODO: This is bad...
-        SingletonMaster.Instance.PlayerAbilities.ResetAbilities();
-        SingletonMaster.Instance.EventManager.LevelClearEvent.AddListener(OnPlayerWin);
-        SingletonMaster.Instance.EventManager.PlayerDeathEvent.AddListener(OnPlayerDeath);
+        if (SingletonMasterObject != null)
+        {
+            SingletonMaster.Instance.PlayerAbilities.ResetAbilities();
+            SingletonMaster.Instance.EventManager.LevelClearEvent.AddListener(OnPlayerWin);
+            SingletonMaster.Instance.EventManager.PlayerDeathEvent.AddListener(OnPlayerDeath);
+
+            SingletonMaster.Instance.PlayerBase.m_ropeRangeIndicator.SetActive(m_levelData.m_needsRopeRangeIndicator);
+        }
+        else
+        {
+            Debug.LogError("No Singleton Instances found...");
+        }
+        
     }
 
     private void OnDisable()
@@ -76,6 +98,9 @@ public class GameManager : MonoBehaviour
             {
                 if (SceneManager.GetActiveScene().buildIndex < m_levelData.m_levelNames.Count - 1)
                 {
+                    // Show level name for new level
+                    m_levelData.m_needsLevelName = true;
+                    
                     m_curLevel++;
                     SceneManager.LoadScene(m_levelData.m_levelNames[m_curLevel]);
                 }
@@ -84,6 +109,12 @@ public class GameManager : MonoBehaviour
                     SingletonMaster.Instance.EventManager.PlayerWinEvent.Invoke();
                 }
             }
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Escape) && !m_gamePaused && m_canPause)
+        {
+            m_gamePaused = true;
+            SingletonMaster.Instance.UI.PauseGame();
         }
     }
 }
