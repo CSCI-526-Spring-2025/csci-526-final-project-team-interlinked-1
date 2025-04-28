@@ -10,7 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c39772bcc2acad40acb2111d5d15d1f, type: 3}
-<<<<<<<< HEAD:Assets/ScriptableObjects/Enemies/Enemy_Dummy.asset
   m_Name: Enemy_Dummy
   m_EditorClassIdentifier: 
   enemy:
@@ -19,13 +18,3 @@ MonoBehaviour:
       m_enemyType: 0
       m_lootSpawnRate: 0
     m_weightedValue: 0
-========
-  m_Name: Enemy_SniperGun
-  m_EditorClassIdentifier: 
-  enemy:
-    m_enemy:
-      m_prefab: {fileID: 4391433643842635490, guid: 595f7d652d5960e43bac15ff38617cd4, type: 3}
-      m_enemyType: 0
-      m_lootSpawnRate: 0
-    m_weightedValue: 0.075
->>>>>>>> 7112f47faf74fb7769f41f5425e799f4694e5dff:Assets/ScriptableObjects/Enemies/Enemy_SniperGun.asset

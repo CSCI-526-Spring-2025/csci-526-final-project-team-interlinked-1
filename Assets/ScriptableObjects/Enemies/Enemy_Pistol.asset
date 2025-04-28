@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy:
     m_enemy:
-      m_prefab: {fileID: 4182519058032308907, guid: f8cdd0b32943b7d4eacfbca1ea051142, type: 3}
+      m_prefab: {fileID: 4182519058032308907, guid: 0c8fc8ef92df2f540a0581a901dc7122, type: 3}
       m_enemyType: 0
       m_lootSpawnRate: 0.3
     m_weightedValue: 0.1
