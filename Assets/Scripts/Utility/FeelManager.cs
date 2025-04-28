@@ -10,6 +10,4 @@ public class FeelManager : MonoBehaviour
     public MMF_Player m_enemyDeath;
     public MMF_Player m_enemyProjectileHit;
     public MMF_Player m_wallParticles;
-    public MMF_Player m_enemyRepulse;
-    public MMF_Player m_enemyExplode;
 }

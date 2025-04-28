@@ -26,9 +26,8 @@ public class BaseEnemyAI : MonoBehaviour
     public Vector2 m_moveDirection { private set; get; } = Vector2.zero;
     [SerializeField] protected float m_invisibleThreshold = 5.0f;
     [SerializeField] protected GameObject m_moveTarget;
-
-    [Header("Visual Settings")] 
-    [SerializeField] protected bool m_willTurnToPlayer = false;
+    
+    [Header("Visual Settings")]
     [SerializeField] protected GameObject m_face;
     [SerializeField] protected float m_faceMoveFactor = 0.25f;
     
@@ -133,21 +132,7 @@ public class BaseEnemyAI : MonoBehaviour
                     }
                 }
             }
-            
-            // Turning to player
-            if (m_willTurnToPlayer)
-            {
-                if (m_moveTarget != null && !GetComponent<Collider2D>().isTrigger)
-                {
-                    Vector3 toTarget = (m_moveTarget.transform.position - transform.position).normalized;
-                    Quaternion targetQuat = Quaternion.LookRotation(toTarget, Vector3.forward);
-                    Quaternion rotQuat = Quaternion.Slerp(transform.rotation, targetQuat, Time.deltaTime * 10.0f);
-                    m_RB.MoveRotation(rotQuat);
-                    
-                    faceDir = transform.InverseTransformDirection(faceDir);
-                }
-            }
-            
+
             // moving face
             m_face.transform.localPosition = faceDir * m_faceMoveFactor;
         }

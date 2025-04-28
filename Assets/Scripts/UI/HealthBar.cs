@@ -22,12 +22,6 @@ public class HealthBar : MonoBehaviour
             m_healthComp.DamageEvent.AddListener(OnDamage);
         }
     }
-
-    public void SetYOffset(float offset)
-    {
-        m_offset.y = offset;
-    }
-    
     private void OnDamage(float amount, GameObject instigator)
     {
         m_timer = 0.0f;

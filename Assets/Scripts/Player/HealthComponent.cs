@@ -54,14 +54,6 @@ public class HealthComponent : MonoBehaviour
         // Create Health bar
         m_healthBar = SingletonMaster.Instance.UI.AddHealthBar(this);
     }
-
-    public void SetHealthBarOffset(float offset)
-    {
-        if (m_healthBar != null)
-        {
-            m_healthBar.GetComponent<HealthBar>().SetYOffset(offset);
-        }
-    }
     
     private void OnDisable()
     {
