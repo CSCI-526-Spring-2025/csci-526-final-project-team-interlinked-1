@@ -291,6 +291,7 @@ MonoBehaviour:
   - Lmao
   m_healthComponent: {fileID: 1169677022984367108}
   m_damage: 2
+  m_damageReduceFactor: 0.25
   m_collisionVelocityThreshold: 15
   m_AI: {fileID: 1829588942597929290}
   m_spriteRenderer: {fileID: 394886833122550638}
@@ -310,7 +311,7 @@ MonoBehaviour:
   m_acceleration: 10
   m_maxSpeed: 6
   m_numDirections: 12
-  m_raycastDistance: 2.5
+  m_raycastDistance: 2
   m_surroundDistance: 6
   m_pathfindIgnoreMasks:
     serializedVersion: 2
@@ -335,6 +336,7 @@ MonoBehaviour:
   m_health: 10
   m_maxHealth: 10
   m_invincibleTime: 1
+  m_cooldownRecoverRate: 1
   DamageEvent:
     m_PersistentCalls:
       m_Calls: []
